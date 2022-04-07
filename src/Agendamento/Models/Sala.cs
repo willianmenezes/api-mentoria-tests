@@ -37,6 +37,9 @@
             if (quantidade <= 0)
                 throw new Exception("Nao eh possivel definir a quantidade de lugares com o valor informado");
 
+            if (quantidade >= 45)
+                throw new Exception("Nao eh possivel definir a quantidade de lugares com o valor informado");
+
             QuantidadeDeLugares = quantidade;
         }
 
