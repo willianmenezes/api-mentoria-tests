@@ -1,41 +1,52 @@
 ﻿using Agendamento.Models;
+using AgendamentoTests.ModelsTests.fixture;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
 namespace AgendamentoTests.ModelsTests
 {
-    public class SalaTest
+    [Collection(nameof(SalaTestsCollection))]
+    public class SalaTests
     {
+        private readonly SalaTestsFixture _salaFixture;
 
-        [Theory]
+        public SalaTests(SalaTestsFixture salaFixture)
+        {
+            _salaFixture = salaFixture;
+        }
+
+        [Trait("Agendamento", "Sala")]
+        [Theory(DisplayName = "Erro ao alterar nome")]
         [InlineData("")]
         [InlineData(null)]
         [InlineData("        ")]
         public void AlterarNome_NomeInvalido_DeveRetornarException(string input)
         {
             // arranje 
-            var sala = new Sala("Sala Teste", 10, 1);
+            var sala = _salaFixture.GerarSalaValida();
 
             // act && assert
             Assert.Throws<Exception>(() => sala.AlterarNome(input));
         }
 
-        [Fact]
-        public void AlterarNome_NomeValido_DeveAlterarONomeComSucesso ()
+        [Trait("Agendamento", "Sala")]
+        [Fact(DisplayName = "Alterar nome com sucesso")]
+        public void AlterarNome_NomeValido_DeveAlterarONomeComSucesso()
         {
-            // arranje 
-            var sala = new Sala("Sala Teste", 10, 1);
+            // Arranje 
+            var sala = _salaFixture.GerarSalaValida();
             var novoNome = "Sala Alterada";
 
-            // act
+            // Act
             sala.AlterarNome(novoNome);
 
             // Assert
             Assert.Equal(sala.Nome, novoNome);
         }
 
-        [Theory]
+        [Trait("Agendamento", "Sala")]
+        [Theory(DisplayName = "Erro ao alterar quantidade de lugares")]
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(int.MinValue)]
@@ -43,20 +54,21 @@ namespace AgendamentoTests.ModelsTests
         public void AlterarQuantidadeDeLugares_ValorInvalido_DeveRetornarException(int input)
         {
             // arranje 
-            var sala = new Sala("Sala Teste", 10, 1);
+            var sala = _salaFixture.GerarSalaValida();
 
             // act && assert
             Assert.Throws<Exception>(() => sala.AlterarQuantidadeDeLugares(input));
         }
 
-        [Theory]
+        [Trait("Agendamento", "Sala")]
+        [Theory(DisplayName = "Alterar quantidade de lugares com sucesso")]
         [InlineData(1)]
         [InlineData(10)]
         [InlineData(25)]
         public void AlterarQuantidadeDeLugares_ValorValido_DeveAlterarQuantidadeComSucesso(int novaQuantidadeDeLugares)
         {
             // arranje 
-            var sala = new Sala("Sala Teste", 99, 1);
+            var sala = _salaFixture.GerarSalaValida();
 
             // act
             sala.AlterarQuantidadeDeLugares(novaQuantidadeDeLugares);
