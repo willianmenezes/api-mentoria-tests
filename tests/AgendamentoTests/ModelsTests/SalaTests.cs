@@ -1,7 +1,5 @@
-﻿using Agendamento.Models;
-using AgendamentoTests.ModelsTests.fixture;
+﻿using AgendamentoTests.Common.fixture;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace AgendamentoTests.ModelsTests
